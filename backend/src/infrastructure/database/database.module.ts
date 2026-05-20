@@ -13,6 +13,6 @@ import { DatabaseStatusService } from './connection.config';
         typeOrmConfig(configService),
     }),
   ],
-  providers: [DatabaseStatusService]
+  providers: [DatabaseStatusService],
 })
 export class DatabaseModule {}
