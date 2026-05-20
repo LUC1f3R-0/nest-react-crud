@@ -1,12 +1,11 @@
 import type React from "react";
+import AxiosInstance from "./services/apis/ApiInstances";
 
 const App = () => {
-  
   const fun = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const form = e.currentTarget;
-
     const formData = new FormData(form);
     const formJson = Object.fromEntries(formData.entries());
 
@@ -14,7 +13,13 @@ const App = () => {
   };
 
   const funfetch = async (data: Record<string, FormDataEntryValue>) => {
-    console.log(data);
+    try {
+      const response = await AxiosInstance.post("/users", data);
+
+      console.log("Success:", response.data);
+    } catch (error) {
+      console.error("Request failed:", error);
+    }
   };
 
   return (

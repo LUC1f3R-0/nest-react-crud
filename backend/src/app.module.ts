@@ -1,10 +1,19 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { ConfigModule } from '@nestjs/config';
+import { appConfig, dataConfig, smtpConfig } from './config/app.config';
+import envValidationSchema from './config/validation.config';
+import { DatabaseModule } from './infrastructure/database/database.module';
+import { SmtpModule } from './infrastructure/smtp/smtp.module';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [appConfig, dataConfig, smtpConfig],
+      validationSchema: envValidationSchema,
+    }),
+    DatabaseModule,
+    SmtpModule,
+  ],
 })
 export class AppModule {}
