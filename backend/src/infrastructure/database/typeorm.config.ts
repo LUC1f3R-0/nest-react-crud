@@ -1,5 +1,6 @@
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { join } from 'path';
 
 const typeOrmConfig = (configService: ConfigService): TypeOrmModuleOptions => {
   return {
@@ -16,6 +17,9 @@ const typeOrmConfig = (configService: ConfigService): TypeOrmModuleOptions => {
 
     autoLoadEntities: true,
     synchronize: false,
+
+    migrations: [join(__dirname, 'migrations/*{.ts,.js}')],
+    migrationsTableName: 'migrations',
 
     retryAttempts: 0,
     retryDelay: 0,
